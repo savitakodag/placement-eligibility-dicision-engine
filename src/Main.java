@@ -7,8 +7,6 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Placement Eligibility Decision Engine ===");
-
         System.out.print("Enter candidate name: ");
         String name = scanner.nextLine();
 
@@ -21,56 +19,29 @@ public class Main {
         System.out.print("Enter graduation year: ");
         int graduationYear = scanner.nextInt();
 
-        // Create Candidate object
         Candidate candidate = new Candidate(
-                name,
-                percentage,
-                backlogs,
-                graduationYear
+                name, percentage, backlogs, graduationYear
         );
 
-        // Create Job object
         Job job = new Job(
                 "Infosys",
                 "Java Developer",
                 65.0,
                 0,
-                2026
+                2025
         );
 
-        // Display candidate details
-        System.out.println("\n--- Candidate Details ---");
-        System.out.println("Name: " + candidate.getName());
-        System.out.println("Percentage: " + candidate.getPercentage());
-        System.out.println("Backlogs: " + candidate.getBacklogs());
-        System.out.println("Graduation Year: "
-                + candidate.getGraduationYear());
-
-        // Display job requirements
-        System.out.println("\n--- Job Details ---");
+        System.out.println("\n--- Placement Eligibility Result ---");
+        System.out.println("Candidate: " + candidate.getName());
         System.out.println("Company: " + job.getCompany());
         System.out.println("Role: " + job.getRole());
-        System.out.println("Minimum Percentage: "
-                + job.getMinimumPercentage());
-        System.out.println("Maximum Backlogs: "
-                + job.getMaximumBacklogs());
-        System.out.println("Required Graduation Year: "
-                + job.getRequiredGraduationYear());
 
-        // Check eligibility
-        boolean eligible
-                = candidate.getPercentage() >= job.getMinimumPercentage()
-                && candidate.getBacklogs() <= job.getMaximumBacklogs()
-                && candidate.getGraduationYear()
-                == job.getRequiredGraduationYear();
+        EligibilityChecker checker = new EligibilityChecker();
 
-        System.out.println("\n--- Eligibility Result ---");
+        boolean eligible = checker.evaluate(candidate, job);
 
-        if (eligible) {
-            System.out.println("Eligible for placement!");
-        } else {
-            System.out.println("Not eligible for placement.");
-        }
+        System.out.println("\nFinal Result: "
+                + (eligible ? "ELIGIBLE" : "NOT ELIGIBLE"));
 
         scanner.close();
     }
